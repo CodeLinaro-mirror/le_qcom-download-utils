@@ -1,0 +1,49 @@
+# **************************************************************************
+#
+# Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause
+#
+# **************************************************************************
+
+# Get base OS from Ubunutu
+FROM ubuntu:20.04
+
+
+ENV DEBIAN_FRONTEND=noninteractive
+# Update system
+RUN apt update
+
+# Install below 4.0.14 (kirkstone) yocto system requirements for buiding yocto
+RUN apt install -y gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool
+
+# Install locales for setup locales in system
+RUN apt install -y locales whiptail
+
+# Setup locales
+RUN locale-gen en_US.UTF-8
+RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+
+ENV export LANG=en_US.UTF-8
+ENV export LC_ALL=en_US.UTF-8
+
+# Run below command to download the opensource repo
+RUN wget https://raw.githubusercontent.com/GerritCodeReview/git-repo/v2.41/repo -O /usr/bin/repo && chmod +x /usr/bin/repo
+
+# Change python version system-wide with update-alternatives python
+# 20.04 default python version is 3.8
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
+
+# Change your /bin/sh symlink to point to bash yocto build environment needed bash
+RUN ln -sf /bin/bash /bin/sh
+
+# Export UID and GID in container
+ARG USER
+ARG WORKDIR
+ARG UID
+ARG GID
+RUN groupadd -g $GID -o $USER
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash $USER
+
+WORKDIR $WORKDIR
+
+USER $USER
