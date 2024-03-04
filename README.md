@@ -1,7 +1,12 @@
 Prerequisites
 =============
 
-Docker needs to be installed on the machine
+Install Docker
+--------------
+```{.sh}
+$ bash docker/docker_setup.sh
+```
+         OR
 
 Please follow this link to install docker - https://docs.docker.com/engine/install/ubuntu/
 
@@ -21,9 +26,10 @@ Build with Qcom docker
 │   ├── dockerfiles
 │   │   ├── Dockerfile_20.04
 │   │   └── Dockerfile_22.04
-│   └── docker_run.sh
-├── LICENSE.md
-├── qcom-6.6.00-QLI.1.0-Ver.1.1
+│   ├── docker_run.sh
+│   └── docker_setup.sh
+├── LICENSE
+├── qcom-6.6.13-QLI.1.0-Ver.1.2 (This folder will repeat per release)
 │   └── config.sh
 ├── README.md
 └── utils
@@ -39,31 +45,22 @@ Use `config.sh` to set Dockerfile, Working directory, Release Tag, Sync variable
 Create a yocto docker image
 ---------------------------------
 
-Run `docker_build.sh` to create the image.
+Run `docker_build.sh` to create the image with Dockerfile (Dockerfile_20.04) and
+Dockertag (qcom-6.6.13-qli.1.0-ver.1.2_20.04), Dockertag taken based on the release
+folder in small letters(Docker will not allow Capital letters in Docker tag and appending
+with Dockerfile OS version for easy to identify the release build with dockerfile.
+
 ```{.sh}
-  $ bash docker/docker_build.sh 2>&1 | tee docker_build.log
+  $ bash docker/docker_build.sh -f ./docker/dockerfiles/Dockerfile_20.04 -t qcom-6.6.13-qli.1.0-ver.1.2_20.04
 ```
-Optional parameter for docker/docker_build.sh
-
--f, --dockerfile
-
-dockerfile path (Eg. ./docker/dockerfiles/Dockerfile_20.04)
-
--t, --dockertag
-
-docker tag name
-
--r, --release
-
-release (Eg. qcom-6.6.00-QLI.1.0-Ver.1.1)
-
-By Default it will use the latest Release config.sh
 
 Build the yocto image in a docker container
 -----------------------------------------------
 
+Run `docker_run.sh` with release parameter to sync build the release
+
 ```{.sh}
-  $ bash docker/docker_run.sh 2>&1 | tee sync_build.log
+  $ bash docker/docker_run.sh -t qcom-6.6.13-qli.1.0-ver.1.2_20.04 -r qcom-6.6.13-QLI.1.0-Ver.1.2
 ```
 
 Optional parameter for docker/docker_run.sh
@@ -80,10 +77,6 @@ Working directory (Eg: /local/mnt/worksapce/test)
 
 branch name (Eg: LE.QCLINUX.1.0)
 
--r, --release
-
-release (Eg. qcom-6.6.00-QLI.1.0-Ver.1.1)
-
 -M, --machine
 
 machine (Eg: qcm6490)
@@ -96,10 +89,6 @@ Distro (Eg: qcom-wayland)
 
 Image (Eg: qcom-console-image)
 
--t, --dockertag
-
-Dockertag
-
 -S, --script
 
 Sync Build Script
@@ -107,8 +96,6 @@ Sync Build Script
 -I --itr-session
 
 Interactive docker session
-
-By default it will use the latest Release config.sh
 
 sync_build.sh script is called with docker_run.sh which is having sync and build commands
 -----------------------------------------------------------------------------------------

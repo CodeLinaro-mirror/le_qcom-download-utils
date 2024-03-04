@@ -8,7 +8,7 @@
 # **************************************************************************
 
 exit_msg() {
-    echo "Error: $1"
+    echo " ********** Error: $1 **********"
     exit 1
 }
 
@@ -55,6 +55,10 @@ if [[ "$USER_EMAIL" == "" || "$USER_NAME" == "" ]]; then
 git config --global user.name 'john'
 git config --global user.email 'john@example.com'"
 fi
+COLOR_AUTO=$(git config --get color.ui)
+if [[ "$COLOR_AUTO" == "" ]]; then
+  git config --global color.ui auto
+fi
 }
 
 update_git_config_buffer() {
@@ -62,8 +66,8 @@ local buffer_size=1048576000
 POST_BUFFER=$(git config --get http.postBuffer)
 MAX_REQUEST_BUFFER=$(git config --get http.maxRequestBuffer)
 if [[ "$POST_BUFFER" != "$buffer_size" || "$MAX_REQUEST_BUFFER" != "$buffer_size" ]]; then
-git config --global http.maxRequestBuffer $buffer_size
-git config --global http.postBuffer $buffer_size
+  git config --global http.maxRequestBuffer $buffer_size
+  git config --global http.postBuffer $buffer_size
 fi
 }
 
@@ -73,14 +77,38 @@ check_disk_space() {
   local size=200
   size_in_gb="$(($(stat -f --format="%a*%s/1024/1024/1024" "$WORKDIR")))"
   if [ $size_in_gb -le $size ]; then
-    echo "$WORKDIR Free Space: $size_in_gb"". Free Space: $size_in_gb""GB < 200GB"
+    exit_msg "$WORKDIR Free Space: $size_in_gb"". Free Space: $size_in_gb""GB < $size GB"
     exit 1
   else
     echo "$WORKDIR"". Free Space: ""$size_in_gb""GB"
   fi
 }
 
+check_docker_installation_and_config() {
+if [[ $(which docker) && $(docker --version) ]]; then
+    echo "Docker installed already"
+    docker_users=$(grep /etc/group -e "docker")
+    if [[ "$docker_users" =~ "$USER" ]]; then
+     echo "$USER is part of docker group"
+    else
+     exit_msg "docker is installed but user is not part of the docker group, please run below commands to add user
+
+sudo usermod -aG docker $USER
+newgrp docker
+
+After this logout and login changes to take affect"
+    fi
+else
+    exit_msg  "Docker not installed
+
+Run bash docker/docker_setup.sh to install docker
+              OR
+Please follow this link to install docker - https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository"
+fi
+}
+
 check_netrc_config
 check_git_config
 update_git_config_buffer
 check_disk_space
+check_docker_installation_and_config
