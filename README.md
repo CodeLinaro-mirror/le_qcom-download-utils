@@ -29,7 +29,7 @@ Build with Qcom docker
 │   ├── docker_run.sh
 │   └── docker_setup.sh
 ├── LICENSE
-├── qcom-6.6.13-QLI.1.0-Ver.1.2 (This folder will repeat per release)
+├── qcom-6.6.17-QLI.1.0-Ver.1.3 (This folder will repeat per release)
 │   └── config.sh
 ├── README.md
 └── utils
@@ -46,12 +46,12 @@ Create a yocto docker image
 ---------------------------------
 
 Run `docker_build.sh` to create the image with Dockerfile (Dockerfile_20.04) and
-Dockertag (qcom-6.6.13-qli.1.0-ver.1.2_20.04), Dockertag taken based on the release
+Dockertag (qcom-6.6.17-qli.1.0-ver.1.3_20.04), Dockertag taken based on the release
 folder in small letters(Docker will not allow Capital letters in Docker tag and appending
 with Dockerfile OS version for easy to identify the release build with dockerfile.
 
 ```{.sh}
-  $ bash docker/docker_build.sh -f ./docker/dockerfiles/Dockerfile_20.04 -t qcom-6.6.13-qli.1.0-ver.1.2_20.04
+  $ bash docker/docker_build.sh -f ./docker/dockerfiles/Dockerfile_20.04 -t qcom-6.6.17-qli.1.0-ver.1.3_20.04
 ```
 
 Build the yocto image in a docker container
@@ -60,7 +60,7 @@ Build the yocto image in a docker container
 Run `docker_run.sh` with release parameter to sync build the release
 
 ```{.sh}
-  $ bash docker/docker_run.sh -t qcom-6.6.13-qli.1.0-ver.1.2_20.04 -r qcom-6.6.13-QLI.1.0-Ver.1.2
+  $ bash docker/docker_run.sh -t qcom-6.6.17-qli.1.0-ver.1.3_20.04 -r qcom-6.6.17-QLI.1.0-Ver.1.3
 ```
 
 Optional parameter for docker/docker_run.sh
