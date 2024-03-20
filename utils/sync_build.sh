@@ -104,6 +104,15 @@ envsetup() {
   # setup environment
    export SHELL=/bin/bash
    # shellcheck source=/dev/null
+
+   # copy qnn and snpe in downloads folder for qim-product-sdk release
+   if [[ "$RELEASE" =~ "qim-product-sdk-1.1" ]];then
+     export EXTRALAYERS="meta-qcom-qim-product-sdk"
+     if [[ -d "$WORKDIR/qnn" ]] && [[ -d "$WORKDIR/snpe" ]]; then
+       cp -rf $WORKDIR/qnn $WORKDIR/downloads
+       cp -rf $WORKDIR/snpe $WORKDIR/downloads
+     fi
+   fi
    source setup-environment
 }
 
