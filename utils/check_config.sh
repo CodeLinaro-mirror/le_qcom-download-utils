@@ -29,7 +29,7 @@ password ***"
       else
           exit_msg "Please add qpm-git.qualcomm.com credentials in  $HOME/.netrc like below
 
-machine chipmaster2.qti.qualcomm.com
+machine qpm-git.qualcomm.com
 login ****
 password ***"
       fi
