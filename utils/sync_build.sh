@@ -113,6 +113,11 @@ envsetup() {
        cp -rf $WORKDIR/snpe $WORKDIR/downloads
      fi
    fi
+
+   # export extralayers for realtime SDK
+   if [[ "$RELEASE" =~ "realtime-linux-1.0" ]];then
+     export EXTRALAYERS="meta-qcom-realtime"
+   fi
    source setup-environment
 }
 
