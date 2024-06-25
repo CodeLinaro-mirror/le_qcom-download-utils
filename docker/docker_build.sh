@@ -21,6 +21,8 @@ Usage:
             docker tag name
         -r, --release
             release
+        -n, --no-cache
+            build docker without cache
         -h, --help
             Displays this help list
 
@@ -28,8 +30,8 @@ END_OF_USAGE
     exit 1
 }
 
-LONG_OPTS="dockerfile:,dockertag:,release:,"
-GETOPT_CMD=$(getopt -o f:t:r -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
+LONG_OPTS="nocache:,dockerfile:,dockertag:,release:,"
+GETOPT_CMD=$(getopt -o n:f:t:r -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
 ) || \
             { echo "error parsing options."; echo_usage; }
 
@@ -40,6 +42,7 @@ while true; do
        -f|--dockerfile) DOCKERFILE="$2"; shift ;;
        -t|--dockertag) DOCKERTAG="$2"; shift ;;
        -r|--release) RELEASE="$2"; shift ;;
+       -n|--nocache) NOCACHE="$2"; shift ;;
        --) shift ; break ;;
        *) echo "Error processing args -- unrecognized option $1" >&2
           exit 1;;
@@ -53,10 +56,18 @@ source ./$RELEASE/config.sh
 
 [ -z "$DOCKERFILE" ] && DOCKERFILE="./docker/dockerfiles/$DOCKER_FILE"
 [ -z "$DOCKERTAG" ] && DOCKERTAG=$DOCKER_TAG
+[ -z "$NOCACHE" ] && NOCACHE=$NOCACHE
+
+if [[ "$NOCACHE" == "--no-cache" ]]; then
+    DOCKER_BUILD_ARGS="--no-cache"
+else
+    DOCKER_BUILD_ARGS=""
+fi
+
 
 mkdir -p ./logs
 
-docker build -f  "$DOCKERFILE" \
+docker build $DOCKER_BUILD_ARGS -f  "$DOCKERFILE" \
     --build-arg "USER=$(whoami)" --build-arg "UID=$(id -u)" \
     --build-arg "GID=$(id -g)" -t "$DOCKERTAG" . \
     2>&1 | tee ./logs/docker_build.txt

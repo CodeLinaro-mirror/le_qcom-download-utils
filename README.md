@@ -80,13 +80,19 @@ with Dockerfile OS version for easy to identify the release build with dockerfil
   $ bash docker/docker_build.sh -f ./docker/dockerfiles/Dockerfile_22.04 -t qcom-6.6.28-qli.1.1-ver.1.1_22.04
 ```
 
+If you are facing issue with above docker build command try using `--no-cache` option This option will force rebuilding of layers already available
+
+```{.sh}
+  $ bash docker/docker_build.sh -n --no-cache -f ./docker/dockerfiles/Dockerfile_22.04 -t qcom-6.6.28-qli.1.1-ver.1.1_22.04
+```
+
 Build the yocto image in a docker container
 -----------------------------------------------
 
 Run `docker_run.sh` with release parameter to sync build the release
 
 ```{.sh}
-  $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1`
+  $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1
 ```
 
 Optional parameter for docker/docker_run.sh
