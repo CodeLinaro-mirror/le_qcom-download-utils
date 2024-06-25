@@ -29,7 +29,33 @@ Build with Qcom docker
 │   ├── docker_run.sh
 │   └── docker_setup.sh
 ├── LICENSE
-├── qcom-6.6.17-QLI.1.0-Ver.1.3 (This folder will repeat per release)
+├── qcom-6.6.00-QLI.1.0-Ver.1.1
+│   └── config.sh
+├── qcom-6.6.13-QLI.1.0-Ver.1.2
+│   └── config.sh
+├── qcom-6.6.13-QLI.1.0-Ver.1.3
+│   └── config.sh
+├── qcom-6.6.17-QLI.1.0-Ver.1.3
+│   └── config.sh
+├── qcom-6.6.17-QLI.1.0-Ver.1.3_qim-product-sdk-1.1
+│   └── config.sh
+├── qcom-6.6.17-QLI.1.0-Ver.1.3_realtime-linux-1.0
+│   └── config.sh
+├── qcom-6.6.17-QLI.1.0-Ver.1.4
+│   └── config.sh
+├── qcom-6.6.17-QLI.1.0-Ver.1.4_qim-product-sdk-1.1
+│   └── config.sh
+├── qcom-6.6.17-QLI.1.0-Ver.1.4_realtime-linux-1.0
+│   └── config.sh
+├── qcom-6.6.28-QLI.1.1-Ver.1.0
+│   └── config.sh
+├── qcom-6.6.28-QLI.1.1-Ver.1.0_qim-product-sdk-1.1.1
+│   └── config.sh
+├── qcom-6.6.28-QLI.1.1-Ver.1.1 (This folder will repeat per release)
+│   └── config.sh
+├── qcom-6.6.28-QLI.1.1-Ver.1.1_qim-product-sdk-1.1.3
+│   └── config.sh
+├── qcom-6.6.28-QLI.1.1-Ver.1.1_realtime-linux-1.0
 │   └── config.sh
 ├── README.md
 └── utils
@@ -45,13 +71,13 @@ Use `config.sh` to set Dockerfile, Working directory, Release Tag, Sync variable
 Create a yocto docker image
 ---------------------------------
 
-Run `docker_build.sh` to create the image with Dockerfile (Dockerfile_20.04) and
-Dockertag (qcom-6.6.17-qli.1.0-ver.1.3_20.04), Dockertag taken based on the release
+Run `docker_build.sh` to create the image with Dockerfile (Dockerfile_22.04) and
+Dockertag (qcom-6.6.28-qli.1.1-ver.1.1_22.04), Dockertag taken based on the release
 folder in small letters(Docker will not allow Capital letters in Docker tag and appending
 with Dockerfile OS version for easy to identify the release build with dockerfile.
 
 ```{.sh}
-  $ bash docker/docker_build.sh -f ./docker/dockerfiles/Dockerfile_20.04 -t qcom-6.6.17-qli.1.0-ver.1.3_20.04
+  $ bash docker/docker_build.sh -f ./docker/dockerfiles/Dockerfile_22.04 -t qcom-6.6.28-qli.1.1-ver.1.1_22.04
 ```
 
 Build the yocto image in a docker container
@@ -60,7 +86,7 @@ Build the yocto image in a docker container
 Run `docker_run.sh` with release parameter to sync build the release
 
 ```{.sh}
-  $ bash docker/docker_run.sh -t qcom-6.6.17-qli.1.0-ver.1.3_20.04 -r qcom-6.6.17-QLI.1.0-Ver.1.3
+  $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1`
 ```
 
 Optional parameter for docker/docker_run.sh
