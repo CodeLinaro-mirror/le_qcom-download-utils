@@ -12,40 +12,6 @@ exit_msg() {
     exit 1
 }
 
-check_netrc_config() {
-  if [[ -e ~/.netrc ]];then
-      echo ".netrc file found in home directory"
-      if grep -q "chipmaster2.qti.qualcomm.com" "$HOME/.netrc"; then
-         echo "chipmaster2 credentials found in .netrc";
-      else
-         exit_msg "Please add chipmaster2.qti.qualcomm.com credentials in $HOME/.netrc like below
-
-machine chipmaster2.qti.qualcomm.com
-login ****
-password ***"
-      fi
-      if grep -q "qpm-git.qualcomm.com" "$HOME/.netrc"; then
-         echo "qpm-git credentials found in .netrc";
-      else
-          exit_msg "Please add qpm-git.qualcomm.com credentials in  $HOME/.netrc like below
-
-machine qpm-git.qualcomm.com
-login ****
-password ***"
-      fi
-  else
-      exit_msg "Please create .netrc file in home directory ($HOME/.netrc) and add below lines
-
-machine chipmaster2.qti.qualcomm.com
-login ****
-password ***
-
-machine qpm-git.qualcomm.com
-login ****
-password ***"
-  fi
-}
-
 check_git_config() {
 USER_NAME=$(git config --get user.name)
 USER_EMAIL=$(git config --get user.email)
@@ -107,7 +73,6 @@ Please follow this link to install docker - https://docs.docker.com/engine/insta
 fi
 }
 
-check_netrc_config
 check_git_config
 update_git_config_buffer
 check_disk_space
