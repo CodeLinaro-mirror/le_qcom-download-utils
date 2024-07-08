@@ -118,7 +118,6 @@ fi
 check_workdir_length
 
 docker run --rm $DOCKER_ARGS -v "${HOME}/.gitconfig":"/home/${USER}/.gitconfig" \
-    -v "${HOME}/.netrc":"/home/${USER}/.netrc" \
     -v "$(pwd)":"$(pwd)" -v "$WORKDIR":"$WORKDIR" \
     -w "$WORKDIR" -u "$(id -u)":"$(id -g)" \
     "$DOCKERTAG" /bin/bash "$SCRIPT" \
