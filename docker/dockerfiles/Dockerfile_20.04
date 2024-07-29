@@ -22,6 +22,9 @@ RUN apt install -y locales whiptail
 # Install clang for crosvm compilation
 RUN apt install -y clang-11
 
+# Create OPML documents using XML::Simple
+RUN apt install -y libxml-opml-simplegen-perl
+
 # Setup locales
 RUN locale-gen en_US.UTF-8
 RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
