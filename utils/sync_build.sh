@@ -41,12 +41,15 @@ Usage:
         -i, --image
             Image (Eg: qcom-console-image)
 
+        -a, --alternate-repo
+            Install repo from clo
+
 END_OF_USAGE
     exit 1
 }
 
-LONG_OPTS="manifest:,help,branch:,release:,machine:,distro:,image:,workdir:,"
-GETOPT_CMD=$(getopt -o b:d:h:i:r:M:m:w: -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
+LONG_OPTS="manifest:,help,branch:,release:,machine:,distro:,image:,workdir:,alternate-repo:,"
+GETOPT_CMD=$(getopt -o b:d:h:i:r:M:m:w:a: -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
 ) || \
             { echo "error parsing options."; echo_usage; }
 
@@ -62,6 +65,7 @@ while true; do
        -d|--distro) DISTRO="$2"; shift ;;
        -i|--image) IMAGE="$2"; shift ;;
        -w|--workdir) WORKDIR="$2"; shift ;;
+       -a|--alternate-repo) ALTERNATE_REPO="$2"; shift ;;
        --) shift ; break ;;
        *) echo "Error processing args -- unrecognized option $1" >&2
           exit 1;;
@@ -75,6 +79,7 @@ done
 [ -z "$MACHINE" ] && MACHINE="qcm6490"
 [ -z "$DISTRO" ] && DISTRO="qcom-wayland"
 [ -z "$IMAGE" ] && IMAGE="qcom-multimedia-image"
+[ -z "$ALTERNATE_REPO" ] && ALTERNATE_REPO="false"
 
 if [ -z "$WORKDIR" ];then
   echo "Please provide working directory to sync and build"
@@ -90,6 +95,14 @@ cd "$WORKDIR"
 
 repo_sync() {
   # repo init
+  if [ "$ALTERNATE_REPO" == "true" ]; then
+    mkdir -p ~/bin && cd ~/bin
+    rm -rf ~/bin/repo_tool
+    git clone https://git.codelinaro.org/clo/la/tools/repo.git -b v2.41 repo_tool
+    cd repo_tool
+    git checkout -b v2.41
+    export PATH=~/bin/repo_tool:$PATH
+  fi
   repo init -u "$MANIFEST" -b "$BRANCH" -m "$RELEASE"
 
   # repo sync

@@ -95,6 +95,13 @@ Run `docker_run.sh` with release parameter to sync build the release
   $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1
 ```
 
+If you are facing issue with repo downloading from google, use below command to use alternate repo
+
+``{.sh}
+  $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1 --alternate-repo true
+```
+
+
 Optional parameter for docker/docker_run.sh
 
 -m, --manifest

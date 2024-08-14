@@ -54,15 +54,18 @@ Usage:
         -S, --script
             Sync Build Script
 
-        -I --itr-session
+        -I, --itr-session
             Interactive docker session
+
+        -a --alternate-repo
+            Download repo from clo
 
 END_OF_USAGE
     exit 1
 }
 
-LONG_OPTS="manifest:,help:,branch:,release:,machine:,distro:,image:,workdir:,dockertag:,script:,itr-session:,"
-GETOPT_CMD=$(getopt -o b:d:h:i:r:M:m:w:I:t:S: -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
+LONG_OPTS="manifest:,help:,branch:,release:,machine:,distro:,image:,workdir:,dockertag:,script:,itr-session:,alternate-repo:,"
+GETOPT_CMD=$(getopt -o b:d:h:i:r:M:m:w:I:t:S:a: -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
 ) || \
             { echo "error parsing options."; echo_usage; }
 
@@ -81,6 +84,7 @@ while true; do
        -t|--dockertag) DOCKERTAG="$2"; shift ;;
        -S|--script) SCRIPT="$2"; shift ;;
        -I|--itr-session) ITR_SESSION="$2"; shift ;;
+       -a|--alternate-repo) ALTERNATE_REPO="$2"; shift ;;
        --) shift ; break ;;
        *) echo "Error processing args -- unrecognized option $1" >&2
           exit 1;;
@@ -108,6 +112,7 @@ source ./$RELEASE/config.sh
 [ -z "$DOCKERTAG" ] && DOCKERTAG=$DOCKER_TAG
 [ -z "$SCRIPT" ] && SCRIPT="./utils/sync_build.sh"
 [ -z "$ITR_SESSION" ] && ITR_SESSION=true
+[ -z "$ALTERNATE_REPO" ] && ALTERNATE_REPO=false
 
 if [[ $ITR_SESSION == true ]]; then
     DOCKER_ARGS="-t"
@@ -124,4 +129,5 @@ docker run --rm $DOCKER_ARGS -v "${HOME}/.gitconfig":"/home/${USER}/.gitconfig" 
     -m "$MANIFEST" -b "$BRANCH" -r "${RELEASE}.xml" \
     -M "$MACHINE" -d "$DISTRO" -i "$IMAGE" \
     -w "$WORKDIR/$RELEASE" \
+    -a "$ALTERNATE_REPO" \
     2>&1 | tee ./logs/docker_run.txt
