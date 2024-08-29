@@ -94,7 +94,6 @@ mkdir -p "$WORKDIR"
 cd "$WORKDIR"
 
 repo_sync() {
-  # repo init
   if [ "$ALTERNATE_REPO" == "true" ]; then
     mkdir -p ~/bin && cd ~/bin
     rm -rf ~/bin/repo_tool
@@ -103,6 +102,11 @@ repo_sync() {
     git checkout -b v2.41
     export PATH=~/bin/repo_tool:$PATH
   fi
+
+  # Go to working directory
+  cd "$WORKDIR"
+
+  # repo init
   repo init -u "$MANIFEST" -b "$BRANCH" -m "$RELEASE"
 
   # repo sync
