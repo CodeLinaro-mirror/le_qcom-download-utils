@@ -95,9 +95,15 @@ Run `docker_run.sh` with release parameter to sync build the release
   $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1
 ```
 
+Build also supports base and custom build overrides. The default override is custom and you can override to base by passing --build-override
+
+```{.sh}
+  $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1 --build-override "base"
+```
+
 If you are facing issue with repo downloading from google, use below command to use alternate repo
 
-``{.sh}
+```{.sh}
   $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1 --alternate-repo true
 ```
 

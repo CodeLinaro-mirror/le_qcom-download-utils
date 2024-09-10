@@ -7,7 +7,7 @@
 #
 # **************************************************************************
 
-set -ex
+set -x
 
 echo_usage()
 {
@@ -44,12 +44,15 @@ Usage:
         -a, --alternate-repo
             Install repo from clo
 
+        -o, --build-override
+            Build Override (Eg: base)
+
 END_OF_USAGE
     exit 1
 }
 
-LONG_OPTS="manifest:,help,branch:,release:,machine:,distro:,image:,workdir:,alternate-repo:,"
-GETOPT_CMD=$(getopt -o b:d:h:i:r:M:m:w:a: -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
+LONG_OPTS="manifest:,help,branch:,release:,machine:,distro:,image:,workdir:,alternate-repo:,build-override:,"
+GETOPT_CMD=$(getopt -o b:d:h:i:r:M:m:w:a:o: -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
 ) || \
             { echo "error parsing options."; echo_usage; }
 
@@ -66,6 +69,7 @@ while true; do
        -i|--image) IMAGE="$2"; shift ;;
        -w|--workdir) WORKDIR="$2"; shift ;;
        -a|--alternate-repo) ALTERNATE_REPO="$2"; shift ;;
+       -o|--build-override) BUILD_OVERRIDE="$2"; shift ;;
        --) shift ; break ;;
        *) echo "Error processing args -- unrecognized option $1" >&2
           exit 1;;
@@ -80,6 +84,7 @@ done
 [ -z "$DISTRO" ] && DISTRO="qcom-wayland"
 [ -z "$IMAGE" ] && IMAGE="qcom-multimedia-image"
 [ -z "$ALTERNATE_REPO" ] && ALTERNATE_REPO="false"
+[ -z "$BUILD_OVERRIDE" ] && BUILD_OVERRIDE="custom"
 
 if [ -z "$WORKDIR" ];then
   echo "Please provide working directory to sync and build"
@@ -114,15 +119,20 @@ repo_sync() {
 }
 
 envsetup() {
- # build variables
-   MACHINE="$MACHINE"
-   DISTRO="$DISTRO"
+  # build variables
+    MACHINE="$MACHINE"
+    DISTRO="$DISTRO"
+
+  # build override parameter for base
+    if [[ "$BUILD_OVERRIDE" == "base" ]]; then
+       QCOM_SELECTED_BSP="base"
+    fi
 
   # setup environment
-   export SHELL=/bin/bash
-   # shellcheck source=/dev/null
+    export SHELL=/bin/bash
+  # shellcheck source=/dev/null
 
-   # copy qnn and snpe in downloads folder for qim-product-sdk release
+  # copy qnn and snpe in downloads folder for qim-product-sdk release
    if [[ "$RELEASE" =~ "qim-product-sdk-1.1" ]];then
      export EXTRALAYERS="meta-qcom-qim-product-sdk"
      if [[ -d "$WORKDIR/qnn" ]] && [[ -d "$WORKDIR/snpe" ]]; then
