@@ -57,10 +57,15 @@ Build with Qcom docker
 │   └── config.sh
 ├── qcom-6.6.28-QLI.1.1-Ver.1.1_realtime-linux-1.0
 │   └── config.sh
+├── qcom-6.6.38-QLI.1.2-Ver.1.0
+│   └── config.sh
+├── qcom-6.6.38-QLI.1.2-Ver.1.0_qim-product-sdk-1.1.1
+│   └── config.sh
 ├── README.md
 └── utils
     ├── check_config.sh
     └── sync_build.sh
+
 ```
 
 Set release configuration
@@ -95,20 +100,20 @@ Run `docker_run.sh` with release parameter to sync build the release
   $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1
 ```
 
-Build also supports base and custom build overrides. The default override is custom and you can override to base by passing --build-override
+Build also supports base and custom build overrides. The default override is custom and you can override to base by passing --build-override "base"
 
 ```{.sh}
   $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1 --build-override "base"
 ```
 
-If you are facing issue with repo downloading from google, use below command to use alternate repo
+If you are facing issue with repo downloading from google, use below command for alternate repo
 
 ```{.sh}
   $ bash docker/docker_run.sh -t qcom-6.6.28-qli.1.1-ver.1.1_22.04 -r qcom-6.6.28-QLI.1.1-Ver.1.1 --alternate-repo true
 ```
 
 
-Optional parameter for docker/docker_run.sh
+Optional parameter for docker/docker_run.sh if you pass these parameters it will override the config.sh parameters
 
 -m, --manifest
 
@@ -138,9 +143,17 @@ Image (Eg: qcom-console-image)
 
 Sync Build Script
 
--I --itr-session
+-I, --itr-session
 
 Interactive docker session
+
+-a, --alternate-repo
+
+Download repo from Codelinaro
+
+-o, --build-override
+
+Build Override (Eg: base)
 
 sync_build.sh script is called with docker_run.sh which is having sync and build commands
 -----------------------------------------------------------------------------------------
