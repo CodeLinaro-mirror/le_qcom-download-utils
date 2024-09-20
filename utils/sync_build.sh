@@ -33,7 +33,7 @@ Usage:
             release xml
 
         -M, --machine
-            machine (Eg: qcm6490)
+            machine (Eg: qcs6490-rb3gen2-vision-kit)
 
         -d, --distro
             Distro (Eg: qcom-wayland)

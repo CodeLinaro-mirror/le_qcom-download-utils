@@ -39,10 +39,10 @@ Usage:
         -r, --release
             release
 
-        -M, --machine
-            machine (Eg: qcm6490)
+        -M, --machine-override
+            machine (Eg: qcs6490-rb3gen2-vision-kit)
 
-        -d, --distro
+        -d, --distro-override
             Distro (Eg: qcom-wayland)
 
         -i, --image
@@ -67,7 +67,7 @@ END_OF_USAGE
     exit 1
 }
 
-LONG_OPTS="manifest:,help:,branch:,release:,machine:,distro:,image:,workdir:,dockertag:,script:,itr-session:,alternate-repo:,build-override:,"
+LONG_OPTS="manifest:,help:,branch:,release:,machine-override:,distro-override:,image:,workdir:,dockertag:,script:,itr-session:,alternate-repo:,build-override:,"
 GETOPT_CMD=$(getopt -o b:d:h:i:r:M:m:w:I:t:S:a:o -l $LONG_OPTS -n "$(basename "$0")" -- "$@"
 ) || \
             { echo "error parsing options."; echo_usage; }
@@ -80,8 +80,8 @@ while true; do
        -h|--help) echo_usage;;
        -b|--branch) BRANCH="$2"; shift ;;
        -r|--release) RELEASE="$2"; shift ;;
-       -M|--machine) MACHINE="$2"; shift ;;
-       -d|--distro) DISTRO="$2"; shift ;;
+       -M|--machine) MACHINE_OVERRIDE="$2"; shift ;;
+       -d|--distro) DISTRO_OVERRIDE="$2"; shift ;;
        -i|--image) IMAGE="$2"; shift ;;
        -w|--workdir) WORKDIR="$2"; shift ;;
        -t|--dockertag) DOCKERTAG="$2"; shift ;;
@@ -124,6 +124,9 @@ if [[ $ITR_SESSION == true ]]; then
 else
     DOCKER_ARGS=""
 fi
+
+[ ! -z "$OVERRIDE_MACHINE" ] && MACHINE=$OVERRIDE_MACHINE
+[ ! -z "$DISTRO_OVERRIDE" ] && DISTRO=$DISTRO_OVERRIDE
 
 check_workdir_length
 
