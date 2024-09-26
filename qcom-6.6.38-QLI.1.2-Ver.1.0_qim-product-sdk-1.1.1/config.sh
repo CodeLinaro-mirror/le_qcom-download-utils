@@ -29,4 +29,4 @@ MANIFEST_FILE="${RELEASE}.xml"
 
 MACHINE="qcs6490-rb3gen2-vision-kit"
 DISTRO="qcom-wayland"
-IMAGE="qcom-multimedia-image qim-product-sdk"
+IMAGE="qcom-multimedia-image qcom-qim-product-sdk"
