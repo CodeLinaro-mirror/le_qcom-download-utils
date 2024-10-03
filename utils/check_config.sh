@@ -64,12 +64,6 @@ newgrp docker
 
 After this logout and login changes to take affect"
     fi
-else
-    exit_msg  "Docker not installed
-
-Run bash docker/docker_setup.sh to install docker
-              OR
-Please follow this link to install docker - https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository"
 fi
 }
 
