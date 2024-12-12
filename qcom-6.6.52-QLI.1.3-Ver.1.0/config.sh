@@ -8,7 +8,7 @@
 # **************************************************************************
 
 # Release tag
-RELEASE="qcom-6.6.38-QLI.1.2-Ver.1.1"
+RELEASE="qcom-6.6.52-QLI.1.3-Ver.1.0"
 
 DOCKER_FILE="Dockerfile_22.04"
 OS=$(echo $DOCKER_FILE | cut -d'_' -f2)
