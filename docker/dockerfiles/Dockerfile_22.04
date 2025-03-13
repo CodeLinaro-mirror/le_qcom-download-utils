@@ -29,6 +29,9 @@ RUN apt install -y libxml-opml-simplegen-perl
 # Install libgtest-dev for robotics sdk compilation
 RUN apt install -y libgtest-dev
 
+#Install requests module for robotics sdk apply patches
+RUN pip install requests
+
 # Setup locales
 RUN locale-gen en_US.UTF-8
 RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
