@@ -145,11 +145,30 @@ envsetup() {
    if [[ "$RELEASE" =~ "realtime-linux-1.0" ]];then
      export EXTRALAYERS="meta-qcom-realtime"
    fi
-   source setup-environment
+
+   # For QIR SDK Compile
+   if [[ "$RELEASE" =~ "robotics-product-sdk" ]]; then
+     echo "source setup-robotics-environment"
+     QIRP_BUILD_DIR="build_${MACHINE}_${BUILD_OVERRIDE}"
+     cd "$WORKDIR"
+     MACHINE=$MACHINE \
+     DISTRO=$DISTRO \
+     QCOM_SELECTED_BSP=$BUILD_OVERRIDE \
+     source setup-robotics-environment \
+     $QIRP_BUILD_DIR
+   else
+     echo "source setup-environment"
+     source setup-environment
+   fi
 }
 
 repo_sync
 
 envsetup
 
-bitbake $IMAGE
+# For QIR SDK Compile
+if [[ "$RELEASE" =~ "robotics-product-sdk" ]]; then
+  ../qirp-build $IMAGE
+else
+  bitbake $IMAGE
+fi
