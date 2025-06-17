@@ -41,6 +41,11 @@ check_disk_space() {
   local WORKDIR
   WORKDIR="$(pwd)"
   local size=200
+
+  if [[ $# -gt 0 && "$1" == "qcom-robotics-full-image" ]]; then
+    size=450
+  fi
+
   size_in_gb="$(($(stat -f --format="%a*%s/1024/1024/1024" "$WORKDIR")))"
   if [ $size_in_gb -le $size ]; then
     exit_msg "$WORKDIR Free Space: $size_in_gb"". Free Space: $size_in_gb""GB < $size GB"
@@ -69,5 +74,5 @@ fi
 
 check_git_config
 update_git_config_buffer
-check_disk_space
+check_disk_space "$@"
 check_docker_installation_and_config
