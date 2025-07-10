@@ -115,7 +115,7 @@ repo_sync() {
   repo init -u "$MANIFEST" -b "$BRANCH" -m "$RELEASE"
 
   # repo sync
-  repo sync -j"$(nproc)"
+  repo sync -j"$(nproc)" || { echo "Error: repo sync failed"; exit 1; }
 }
 
 envsetup() {
