@@ -147,7 +147,7 @@ envsetup() {
    fi
 
    # For QIR SDK Compile
-   if [[ "$RELEASE" =~ "robotics-product-sdk" ]]; then
+   if [[ "$RELEASE" =~ "robotics-product-sdk" || "$RELEASE" =~ "robotics-sdk" ]]; then
      echo "source setup-robotics-environment"
      QIRP_BUILD_DIR="build_${MACHINE}_${BUILD_OVERRIDE}"
      cd "$WORKDIR"
@@ -167,7 +167,7 @@ repo_sync
 envsetup
 
 # For QIR SDK Compile
-if [[ "$RELEASE" =~ "robotics-product-sdk" ]]; then
+if [[ "$RELEASE" =~ "robotics-product-sdk" || "$RELEASE" =~ "robotics-sdk" ]]; then
   ../qirp-build $IMAGE
 else
   bitbake $IMAGE
