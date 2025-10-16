@@ -125,6 +125,14 @@ Build with Qcom docker
 │   └── config.sh
 ├── qcom-6.6.97-QLI.1.6-Ver.1.1_robotics-sdk-1.1
 │   └── config.sh
+├── qcom-6.6.97-QLI.1.6-Ver.1.2
+│   └── config.sh
+├── qcom-6.6.97-QLI.1.6-Ver.1.2_qim-product-sdk-2.1.1
+│   └── config.sh
+├── qcom-6.6.97-QLI.1.6-Ver.1.2_realtime-linux-1.0
+│   └── config.sh
+├── qcom-6.6.97-QLI.1.6-Ver.1.2_robotics-sdk-1.2
+│   └── config.sh
 ├── README.md
 └── utils
     ├── check_config.sh
@@ -141,16 +149,16 @@ Create a yocto docker image
 ---------------------------------
 
 Run `docker_build.sh` to create the image with Dockerfile (Dockerfile_22.04) and
-Dockertag (qcom-6.6.97-qli.1.6-ver.1.1_22.04), Dockertag taken based on the release folder in small letters(Docker will not allow Capital letters in Docker tag and appending with Dockerfile OS version for easy to identify the release build with dockerfile.
+Dockertag (qcom-6.6.97-qli.1.6-ver.1.2_22.04), Dockertag taken based on the release folder in small letters(Docker will not allow Capital letters in Docker tag and appending with Dockerfile OS version for easy to identify the release build with dockerfile.
 
 ```{.sh}
-  $ bash docker/docker_build.sh -f ./docker/dockerfiles/Dockerfile_22.04 -t qcom-6.6.97-qli.1.6-ver.1.1_22.04
+  $ bash docker/docker_build.sh -f ./docker/dockerfiles/Dockerfile_22.04 -t qcom-6.6.97-qli.1.6-ver.1.2_22.04
 ```
 
 If you are facing issue with above docker build command try using `--no-cache` option This option will force rebuilding of layers already available
 
 ```{.sh}
-  $ bash docker/docker_build.sh -n --no-cache -f ./docker/dockerfiles/Dockerfile_22.04 -t qcom-6.6.97-qli.1.6-ver.1.1_22.04
+  $ bash docker/docker_build.sh -n --no-cache -f ./docker/dockerfiles/Dockerfile_22.04 -t qcom-6.6.97-qli.1.6-ver.1.2_22.04
 ```
 
 Build the yocto image in a docker container
@@ -159,19 +167,19 @@ Build the yocto image in a docker container
 Run `docker_run.sh` with release parameter to sync build the release
 
 ```{.sh}
-  $ bash docker/docker_run.sh -t qcom-6.6.97-qli.1.6-ver.1.1_22.04 -r qcom-6.6.97-QLI.1.6-Ver.1.1
+  $ bash docker/docker_run.sh -t qcom-6.6.97-qli.1.6-ver.1.2_22.04 -r qcom-6.6.97-QLI.1.6-Ver.1.2
 ```
 
 Build also supports base and custom build overrides. The default override is custom and you can override to base by passing --build-override "base"
 
 ```{.sh}
-  $ bash docker/docker_run.sh -t qcom-6.6.97-qli.1.6-ver.1.1_22.04 -r qcom-6.6.97-QLI.1.6-Ver.1.1 --build-override "base"
+  $ bash docker/docker_run.sh -t qcom-6.6.97-qli.1.6-ver.1.2_22.04 -r qcom-6.6.97-QLI.1.6-Ver.1.2 --build-override "base"
 ```
 
 If you are facing issue with repo downloading from google, use below command for alternate repo
 
 ```{.sh}
-  $ bash docker/docker_run.sh -t qcom-6.6.97-qli.1.6-ver.1.1_22.04 -r qcom-6.6.97-QLI.1.6-Ver.1.1 --alternate-repo true
+  $ bash docker/docker_run.sh -t qcom-6.6.97-qli.1.6-ver.1.2_22.04 -r qcom-6.6.97-QLI.1.6-Ver.1.2 --alternate-repo true
 ```
 
 
