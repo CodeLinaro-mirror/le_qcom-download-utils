@@ -73,7 +73,7 @@ Build with Qcom docker
 │   └── config.sh
 ├── qcom-6.6.136-QLI.1.9-Ver.1.1
 │   └── config.sh
-├── qcom-6.6.136-QLI.1.9-Ver.1.1_qim-product-sdk-2.4.0
+├── qcom-6.6.136-QLI.1.9-Ver.1.1_qim-product-sdk-2.4.1
 │   └── config.sh
 ├── qcom-6.6.136-QLI.1.9-Ver.1.1_realtime-linux-1.1
 │   └── config.sh
